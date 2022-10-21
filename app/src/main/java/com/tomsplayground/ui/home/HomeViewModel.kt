@@ -1,13 +1,12 @@
 package com.tomsplayground.ui.home
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(): ViewModel(){
+class HomeViewModel @Inject constructor() : ViewModel() {
     private val _uiState = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
@@ -15,8 +14,7 @@ class HomeViewModel @Inject constructor(): ViewModel(){
         getContent()
     }
 
-    private fun getContent(){
-        _uiState.update { it.copy(welcomeMessage = "Hello world!")}
+    private fun getContent() {
+        _uiState.update { it.copy(welcomeMessage = "Hello world!") }
     }
-
 }

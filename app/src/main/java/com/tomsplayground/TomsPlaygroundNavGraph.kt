@@ -21,10 +21,9 @@ fun TomsPlaygroundNavGraph(
         startDestination = startDestination,
         modifier = modifier
     ) {
-        composable(TomsPlaygroundDestinations.HOME_ROUTE){
+        composable(TomsPlaygroundDestinations.HOME_ROUTE) {
             val viewModel = hiltViewModel<HomeViewModel>()
             HomeScreen(viewModel)
         }
     }
 }
-

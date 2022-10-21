@@ -7,9 +7,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.tomsplayground.ui.theme.TomsPlaygroundTheme
 
-
 @Composable
-fun HomeScreen(viewModel: HomeViewModel){
+fun HomeScreen(viewModel: HomeViewModel) {
     val uiState by viewModel.uiState.collectAsState()
     HomeContent(uiState)
 }
@@ -19,12 +18,9 @@ fun HomeContent(uiState: HomeUiState) {
     Text(uiState.welcomeMessage ?: "")
 }
 
-
-
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     TomsPlaygroundTheme {
-
     }
 }
