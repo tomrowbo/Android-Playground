@@ -20,7 +20,7 @@ fun TomsPlaygroundApp() {
         }
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute =
-            navBackStackEntry?.destination?.route ?: TomsPlaygroundDestinations.HOME_ROUTE
+            navBackStackEntry?.destination?.route ?: TomsPlaygroundDestinations.HOME_SCREEN
         // A surface container using the 'background' color from the theme
         Surface(
             modifier = Modifier.fillMaxSize(),
