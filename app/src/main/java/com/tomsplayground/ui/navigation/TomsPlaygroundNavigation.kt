@@ -9,6 +9,8 @@ import androidx.navigation.NavHostController
 object TomsPlaygroundDestinations {
     const val PROFILE_SCREEN =  "profile"
     const val HOME_SCREEN = "home"
+    const val SEARCH_SCREEN = "search"
+    const val POST_SCREEN = "post"
 }
 
 /**
