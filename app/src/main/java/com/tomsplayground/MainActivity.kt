@@ -1,5 +1,6 @@
 package com.tomsplayground
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -80,7 +81,7 @@ fun PlaygroundAppPreview() {
 }
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
-@Preview(showBackground = true, widthDp = 700, heightDp = 500)
+@Preview(showBackground = true, widthDp = 700, heightDp = 500, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun PlaygroundAppPreviewTablet() {
     TomsPlaygroundTheme {
