@@ -1,5 +1,6 @@
 package com.tomsplayground
 
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -16,6 +17,7 @@ fun TomsPlaygroundNavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
     startDestination: String = TomsPlaygroundDestinations.PROFILE_SCREEN,
+    widthSize: WindowWidthSizeClass
 ) {
     NavHost(
         navController = navController,
@@ -27,7 +29,7 @@ fun TomsPlaygroundNavGraph(
             HomeScreen(viewModel)
         }
         composable(TomsPlaygroundDestinations.PROFILE_SCREEN) {
-            ProfileScreen()
+            ProfileScreen(widthSize)
         }
     }
 }

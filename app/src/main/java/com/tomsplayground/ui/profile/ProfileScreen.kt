@@ -13,7 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,17 +22,21 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.tomsplayground.R
-import com.tomsplayground.TomsPlaygroundApp
 import com.tomsplayground.ui.theme.TomsPlaygroundTheme
 
-@Preview(showSystemUi = true)
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(widthSize: WindowWidthSizeClass) {
+    val columns = when (widthSize) {
+        WindowWidthSizeClass.Compact -> 3
+        WindowWidthSizeClass.Medium -> 4
+        WindowWidthSizeClass.Expanded -> 5
+        else -> 1
+    }
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -77,16 +81,16 @@ fun ProfileScreen() {
                 "https://realfood.tesco.com/media/images/472x310-SausageRaguGnocchi-4921325c-64d5-4973-9451-759d0c115e2e-0-472x310.jpg",
                 "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=768,574",
                 "https://realfood.tesco.com/media/images/472x310-SausageRaguGnocchi-4921325c-64d5-4973-9451-759d0c115e2e-0-472x310.jpg",
-            )
+            ), columns
         )
     }
 
 }
 
 @Composable
-fun PhotoGrid(photoUrls: List<String>) {
+fun PhotoGrid(photoUrls: List<String>, columns: Int) {
     LazyVerticalGrid(
-        columns = GridCells.Adaptive(minSize = 128.dp),
+        columns = GridCells.Fixed(columns),
         verticalArrangement = Arrangement.spacedBy(4.dp),
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         modifier = Modifier.padding(4.dp)
@@ -136,52 +140,52 @@ fun PhotoGrid(photoUrls: List<String>) {
 }
 
 
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
-@Preview(showBackground = true)
-@Composable
-fun PlaygroundAppPreview() {
-    TomsPlaygroundTheme {
-        ProfileScreen()
-    }
-}
-
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
-@Preview(
-    showBackground = true,
-    widthDp = 700,
-    heightDp = 500,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
-)
-@Composable
-fun PlaygroundAppPreviewTablet() {
-    TomsPlaygroundTheme {
-        ProfileScreen()
-    }
-}
-
-@Preview(showBackground = true, widthDp = 500, heightDp = 700)
-@Composable
-fun PlaygroundAppPreviewTabletPortrait() {
-    TomsPlaygroundTheme {
-        ProfileScreen()
-    }
-}
-
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
-@Preview(showBackground = true, widthDp = 1100, heightDp = 600)
-@Composable
-fun PlaygroundAppPreviewDesktop() {
-    TomsPlaygroundTheme {
-        ProfileScreen()
-    }
-}
-
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
-@Preview(showBackground = true, widthDp = 600, heightDp = 1100)
-@Composable
-fun PlaygroundAppPreviewDesktopPortrait() {
-    TomsPlaygroundTheme {
-        ProfileScreen()
-    }
-}
+//@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
+//@Preview(showBackground = true)
+//@Composable
+//fun PlaygroundAppPreview() {
+//    TomsPlaygroundTheme {
+//        ProfileScreen()
+//    }
+//}
+//
+//@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
+//@Preview(
+//    showBackground = true,
+//    widthDp = 700,
+//    heightDp = 500,
+//    uiMode = Configuration.UI_MODE_NIGHT_YES
+//)
+//@Composable
+//fun PlaygroundAppPreviewTablet() {
+//    TomsPlaygroundTheme {
+//        ProfileScreen()
+//    }
+//}
+//
+//@Preview(showBackground = true, widthDp = 500, heightDp = 700)
+//@Composable
+//fun PlaygroundAppPreviewTabletPortrait() {
+//    TomsPlaygroundTheme {
+//        ProfileScreen()
+//    }
+//}
+//
+//@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
+//@Preview(showBackground = true, widthDp = 1100, heightDp = 600)
+//@Composable
+//fun PlaygroundAppPreviewDesktop() {
+//    TomsPlaygroundTheme {
+//        ProfileScreen()
+//    }
+//}
+//
+//@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
+//@Preview(showBackground = true, widthDp = 600, heightDp = 1100)
+//@Composable
+//fun PlaygroundAppPreviewDesktopPortrait() {
+//    TomsPlaygroundTheme {
+//        ProfileScreen()
+//    }
+//}
 

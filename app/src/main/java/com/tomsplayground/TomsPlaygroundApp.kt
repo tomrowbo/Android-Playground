@@ -1,5 +1,6 @@
 package com.tomsplayground
 
+import android.icu.text.ListFormatter.Width
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -104,7 +105,7 @@ fun TomsPlaygroundApp(windowSize: WindowSizeClass, displayFeatures: List<Display
         }
 
 //        val navigationType = getNavigationType(windowSize.widthSizeClass, devicePosture)
-        TomsPlaygroundNavigationWrapper(navigationType, contentType)
+        TomsPlaygroundNavigationWrapper(navigationType, contentType, windowSize.widthSizeClass)
 
     }
 }
@@ -133,7 +134,8 @@ fun getNavigationType(windowSize: WindowWidthSizeClass, devicePosture: DevicePos
 @Composable
 fun TomsPlaygroundNavigationWrapper(
     navigationType: PlaygroundNavigationType,
-    contentType: PlaygroundContentType
+    contentType: PlaygroundContentType,
+    widthSize: WindowWidthSizeClass
 ) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -141,7 +143,7 @@ fun TomsPlaygroundNavigationWrapper(
         navBackStackEntry?.destination?.route ?: HOME_SCREEN
 
     if (navigationType == PlaygroundNavigationType.PERMANENT_NAVIGATION_DRAWER) {
-        PlaygroundPermanentNavigationDrawerView(navController)
+        PlaygroundPermanentNavigationDrawerView(navController, widthSize)
     } else {
         Row(modifier = Modifier.fillMaxSize()) {
             AnimatedVisibility(visible = navigationType == PlaygroundNavigationType.NAVIGATION_RAIL) {
@@ -154,7 +156,7 @@ fun TomsPlaygroundNavigationWrapper(
                     .fillMaxSize()
                     .background(MaterialTheme.colorScheme.background)
             ) {
-                TomsPlaygroundNavGraph(Modifier.weight(1f))
+                TomsPlaygroundNavGraph(Modifier.weight(1f),widthSize = widthSize)
                 AnimatedVisibility(visible = navigationType == PlaygroundNavigationType.BOTTOM_NAVIGATION) {
                     PlaygroundNavigationBar(
                         navController
@@ -250,10 +252,9 @@ fun PlaygroundNavigationBar(navController: NavController) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PlaygroundPermanentNavigationDrawerView(navController: NavController) {
-    val currentDestination = navController.currentDestination?.navigatorName
+fun PlaygroundPermanentNavigationDrawerView(navController: NavController, widthSize: WindowWidthSizeClass) {
     PermanentNavigationDrawer(drawerContent = { PlaygroundNavigationDrawerContent(navController) }) {
-        TomsPlaygroundNavGraph()
+        TomsPlaygroundNavGraph(widthSize= widthSize)
     }
 }
 
@@ -269,7 +270,7 @@ fun PlaygroundNavigationDrawerContent(navController: NavController) {
         ) {
             navItems.forEach {
                 NavigationDrawerItem(
-                    selected = currentDestination == it.location,
+                    selected = "profile" == it.location,
                     onClick = { navController.navigate(it.location) },
                     icon = {
                         Icon(
