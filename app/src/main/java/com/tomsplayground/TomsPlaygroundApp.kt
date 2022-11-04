@@ -1,35 +1,28 @@
 package com.tomsplayground
 
-import android.icu.text.ListFormatter.Width
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.material3.windowsizeclass.WindowHeightSizeClass
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.window.layout.DisplayFeature
 import androidx.window.layout.FoldingFeature
-import com.tomsplayground.NavContent.navItems
-import com.tomsplayground.TomsPlaygroundDestinations.HOME_SCREEN
+import com.tomsplayground.ui.navigation.PlaygroundNavigationBar
+import com.tomsplayground.ui.navigation.PlaygroundNavigationRail
+import com.tomsplayground.ui.navigation.PlaygroundPermanentNavigationDrawerView
+import com.tomsplayground.ui.navigation.TomsPlaygroundNavGraph
 import com.tomsplayground.ui.theme.TomsPlaygroundTheme
 import com.tomsplayground.ui.utils.*
 
@@ -104,30 +97,8 @@ fun TomsPlaygroundApp(windowSize: WindowSizeClass, displayFeatures: List<Display
             }
         }
 
-//        val navigationType = getNavigationType(windowSize.widthSizeClass, devicePosture)
         TomsPlaygroundNavigationWrapper(navigationType, contentType, windowSize.widthSizeClass)
 
-    }
-}
-
-fun getNavigationType(windowSize: WindowWidthSizeClass, devicePosture: DevicePosture): Any {
-    return when (windowSize) {
-        WindowWidthSizeClass.Compact -> {
-            PlaygroundNavigationType.BOTTOM_NAVIGATION
-        }
-        WindowWidthSizeClass.Medium -> {
-            PlaygroundNavigationType.NAVIGATION_RAIL
-        }
-        WindowWidthSizeClass.Expanded -> {
-            if (devicePosture is DevicePosture.BookPosture) {
-                PlaygroundNavigationType.NAVIGATION_RAIL
-            } else {
-                PlaygroundNavigationType.PERMANENT_NAVIGATION_DRAWER
-            }
-        }
-        else -> {
-            PlaygroundNavigationType.BOTTOM_NAVIGATION
-        }
     }
 }
 
@@ -138,17 +109,24 @@ fun TomsPlaygroundNavigationWrapper(
     widthSize: WindowWidthSizeClass
 ) {
     val navController = rememberNavController()
+    val topLevelNavActions = remember(navController) {
+        TomsPlaygroundNavigationActions(navController)
+    }
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val selectedDestination =
-        navBackStackEntry?.destination?.route ?: HOME_SCREEN
+        navBackStackEntry?.destination?.route ?: TomsPlaygroundTopLevelDestinations.HOME_SCREEN
 
     if (navigationType == PlaygroundNavigationType.PERMANENT_NAVIGATION_DRAWER) {
-        PlaygroundPermanentNavigationDrawerView(navController, widthSize)
+        PlaygroundPermanentNavigationDrawerView(
+            widthSize,
+            topLevelNavActions::navigateTo,
+            selectedDestination
+        )
     } else {
         Row(modifier = Modifier.fillMaxSize()) {
             AnimatedVisibility(visible = navigationType == PlaygroundNavigationType.NAVIGATION_RAIL) {
                 PlaygroundNavigationRail(
-                    navController
+                    topLevelNavActions::navigateTo, selectedDestination
                 )
             }
             Column(
@@ -156,10 +134,10 @@ fun TomsPlaygroundNavigationWrapper(
                     .fillMaxSize()
                     .background(MaterialTheme.colorScheme.background)
             ) {
-                TomsPlaygroundNavGraph(Modifier.weight(1f),widthSize = widthSize)
+                TomsPlaygroundNavGraph(Modifier.weight(1f), navController, widthSize = widthSize)
                 AnimatedVisibility(visible = navigationType == PlaygroundNavigationType.BOTTOM_NAVIGATION) {
                     PlaygroundNavigationBar(
-                        navController
+                        topLevelNavActions::navigateTo, selectedDestination
                     )
                 }
             }
@@ -167,133 +145,4 @@ fun TomsPlaygroundNavigationWrapper(
     }
 }
 
-@Composable
-fun PlaygroundAppContent() {
-    Text(text = "test")
-}
-
-
-object NavContent {
-    val navItems = listOf(
-        NavComponentItem("Home", HOME_SCREEN, Icons.Default.Home, R.string.home_icon_content_desc),
-        NavComponentItem(
-            "Search",
-            TomsPlaygroundDestinations.SEARCH_SCREEN,
-            Icons.Default.Search,
-            R.string.search_icon_content_desc
-        ),
-        NavComponentItem(
-            "Post",
-            TomsPlaygroundDestinations.POST_SCREEN,
-            Icons.Default.Add,
-            R.string.post_icon_content_desc
-        ),
-        NavComponentItem(
-            "Profile",
-            TomsPlaygroundDestinations.PROFILE_SCREEN,
-            Icons.Default.Person,
-            R.string.person_icon_content_desc
-        )
-    )
-}
-
-
-@Composable
-fun PlaygroundNavigationRail(navController: NavController) {
-    val currentDestination = navController.currentDestination?.navigatorName
-    NavigationRail(containerColor = MaterialTheme.colorScheme.primaryContainer) {
-        navItems.forEach {
-            NavigationRailItem(
-                selected = currentDestination == it.location,
-                onClick = { navController.navigate(it.location) },
-                icon = {
-                    Icon(
-                        imageVector = it.icon,
-                        contentDescription = stringResource(id = it.contentDescription)
-                    )
-                },
-                label = {
-                    Text(
-                        text = it.name,
-                        style = MaterialTheme.typography.labelSmall,
-                        textAlign = TextAlign.Center
-                    )
-                }
-            )
-        }
-    }
-}
-
-@Composable
-fun PlaygroundNavigationBar(navController: NavController) {
-    val currentDestination = navController.currentDestination?.navigatorName
-    BottomAppBar(containerColor = MaterialTheme.colorScheme.primaryContainer) {
-        navItems.forEach {
-            NavigationBarItem(
-                selected = currentDestination == it.location,
-                onClick = { navController.navigate(it.location) },
-                icon = {
-                    Icon(
-                        imageVector = it.icon,
-                        contentDescription = stringResource(id = it.contentDescription)
-                    )
-                },
-                label = {
-                    Text(
-                        text = it.name,
-                        style = MaterialTheme.typography.labelSmall,
-                        textAlign = TextAlign.Center
-                    )
-                }
-            )
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun PlaygroundPermanentNavigationDrawerView(navController: NavController, widthSize: WindowWidthSizeClass) {
-    PermanentNavigationDrawer(drawerContent = { PlaygroundNavigationDrawerContent(navController) }) {
-        TomsPlaygroundNavGraph(widthSize= widthSize)
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun PlaygroundNavigationDrawerContent(navController: NavController) {
-    val currentDestination = navController.currentDestination?.navigatorName
-    PermanentDrawerSheet(modifier = Modifier.sizeIn(minWidth = 150.dp, maxWidth = 200.dp)) {
-        Column(
-            Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            navItems.forEach {
-                NavigationDrawerItem(
-                    selected = "profile" == it.location,
-                    onClick = { navController.navigate(it.location) },
-                    icon = {
-                        Icon(
-                            imageVector = it.icon,
-                            contentDescription = stringResource(id = it.contentDescription)
-                        )
-                    },
-                    label = {
-                        Text(
-                            text = it.name,
-                            style = MaterialTheme.typography.labelSmall,
-                            textAlign = TextAlign.Center
-                        )
-                    })
-            }
-        }
-    }
-}
-
-data class NavComponentItem(
-    val name: String,
-    val location: String,
-    val icon: ImageVector,
-    val contentDescription: Int
-)
 

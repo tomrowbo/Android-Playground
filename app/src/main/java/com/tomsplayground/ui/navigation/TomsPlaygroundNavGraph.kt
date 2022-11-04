@@ -1,4 +1,4 @@
-package com.tomsplayground
+package com.tomsplayground.ui.navigation
 
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.tomsplayground.TomsPlaygroundTopLevelDestinations
 import com.tomsplayground.ui.home.HomeScreen
 import com.tomsplayground.ui.home.HomeViewModel
 import com.tomsplayground.ui.profile.ProfileScreen
@@ -16,7 +17,7 @@ import com.tomsplayground.ui.profile.ProfileScreen
 fun TomsPlaygroundNavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = TomsPlaygroundDestinations.PROFILE_SCREEN,
+    startDestination: String = TomsPlaygroundTopLevelDestinations.HOME_SCREEN,
     widthSize: WindowWidthSizeClass
 ) {
     NavHost(
@@ -24,11 +25,11 @@ fun TomsPlaygroundNavGraph(
         startDestination = startDestination,
         modifier = modifier
     ) {
-        composable(TomsPlaygroundDestinations.HOME_SCREEN) {
+        composable(TomsPlaygroundTopLevelDestinations.HOME_SCREEN) {
             val viewModel = hiltViewModel<HomeViewModel>()
             HomeScreen(viewModel)
         }
-        composable(TomsPlaygroundDestinations.PROFILE_SCREEN) {
+        composable(TomsPlaygroundTopLevelDestinations.PROFILE_SCREEN) {
             ProfileScreen(widthSize)
         }
     }
