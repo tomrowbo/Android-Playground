@@ -15,6 +15,8 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.window.layout.FoldingFeature
 import androidx.window.layout.WindowInfoTracker
+import com.google.accompanist.adaptive.calculateDisplayFeatures
+import com.tomsplayground.ui.theme.TomsPlaygroundTheme
 import com.tomsplayground.ui.utils.DevicePosture
 import com.tomsplayground.ui.utils.isBookPosture
 import com.tomsplayground.ui.utils.isSeparating
@@ -23,8 +25,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import com.google.accompanist.adaptive.calculateDisplayFeatures
-import com.tomsplayground.ui.theme.TomsPlaygroundTheme
 
 @AndroidEntryPoint
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)

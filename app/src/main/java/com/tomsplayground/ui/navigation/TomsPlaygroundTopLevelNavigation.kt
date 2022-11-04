@@ -50,7 +50,7 @@ val TOP_LEVEL_NAV_DESTINATION_ITEMS = listOf(
  * Models the navigation actions in the app.
  */
 class TomsPlaygroundNavigationActions(private val navController: NavHostController) {
-    fun navigateTo(navItem: NavComponentItem){
+    fun navigateTo(navItem: NavComponentItem) {
         navController.navigate(navItem.location) {
             // Pop up to the start destination of the graph to
             // avoid building up a large stack of destinations

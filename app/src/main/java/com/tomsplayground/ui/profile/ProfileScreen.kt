@@ -44,21 +44,20 @@ fun ProfileScreen(widthSize: WindowWidthSizeClass, viewModel: ProfileViewModel) 
             .background(MaterialTheme.colorScheme.background)
     ) {
         PhotoGrid(
-            uiState.postUrls, uiState.username, uiState.name, uiState.profilePicUrl,columns
+            uiState.postUrls, uiState.username, uiState.name, uiState.profilePicUrl, columns
         )
     }
-
 }
 
 @Composable
-fun PhotoGrid(photoUrls: List<String>, username: String?, fullName: String?, pfpUrl: String?,columns: Int) {
+fun PhotoGrid(photoUrls: List<String>, username: String?, fullName: String?, pfpUrl: String?, columns: Int) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(columns),
         verticalArrangement = Arrangement.spacedBy(4.dp),
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         modifier = Modifier.padding(4.dp)
     ) {
-        item(span = {GridItemSpan(maxLineSpan)}){
+        item(span = { GridItemSpan(maxLineSpan) }) {
             val pfpModifier = Modifier
                 .size(100.dp)
                 .clip(CircleShape)
@@ -75,7 +74,7 @@ fun PhotoGrid(photoUrls: List<String>, username: String?, fullName: String?, pfp
                     contentScale = ContentScale.Crop,
                 )
                 Text(
-                    text = fullName?:"",
+                    text = fullName ?: "",
                     style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.onBackground,
                     fontWeight = FontWeight.Bold
@@ -95,10 +94,9 @@ fun PhotoGrid(photoUrls: List<String>, username: String?, fullName: String?, pfp
                     .crossfade(true).error(R.drawable.default_profile_pic)
                     .build(),
                 contentDescription = "Picture",
-                modifier = Modifier.fillMaxSize().aspectRatio(1f/1f).clip(RoundedCornerShape(12.dp)),
+                modifier = Modifier.fillMaxSize().aspectRatio(1f / 1f).clip(RoundedCornerShape(12.dp)),
                 contentScale = ContentScale.Crop,
             )
         }
     }
 }
-

@@ -12,7 +12,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.tomsplayground.TOP_LEVEL_NAV_DESTINATION_ITEMS
 
@@ -118,7 +117,8 @@ fun PlaygroundNavigationDrawerContent(
                             style = MaterialTheme.typography.labelSmall,
                             textAlign = TextAlign.Center
                         )
-                    })
+                    }
+                )
             }
         }
     }
@@ -130,4 +130,3 @@ data class NavComponentItem(
     val icon: ImageVector,
     val contentDescription: Int
 )
-
