@@ -1,6 +1,5 @@
 package com.tomsplayground.ui.profile
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -12,30 +11,31 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.tomsplayground.R
-import com.tomsplayground.ui.theme.TomsPlaygroundTheme
 
 @Composable
-fun ProfileScreen(widthSize: WindowWidthSizeClass) {
+fun ProfileScreen(widthSize: WindowWidthSizeClass, viewModel: ProfileViewModel) {
     val columns = when (widthSize) {
         WindowWidthSizeClass.Compact -> 3
         WindowWidthSizeClass.Medium -> 4
         WindowWidthSizeClass.Expanded -> 5
         else -> 1
     }
+
+    val uiState by viewModel.uiState.collectAsState()
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -44,51 +44,14 @@ fun ProfileScreen(widthSize: WindowWidthSizeClass) {
             .background(MaterialTheme.colorScheme.background)
     ) {
         PhotoGrid(
-            listOf(
-                "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=768,574",
-                "https://realfood.tesco.com/media/images/472x310-SausageRaguGnocchi-4921325c-64d5-4973-9451-759d0c115e2e-0-472x310.jpg",
-                "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=768,574",
-                "https://realfood.tesco.com/media/images/472x310-SausageRaguGnocchi-4921325c-64d5-4973-9451-759d0c115e2e-0-472x310.jpg",
-                "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=768,574",
-                "https://realfood.tesco.com/media/images/472x310-SausageRaguGnocchi-4921325c-64d5-4973-9451-759d0c115e2e-0-472x310.jpg",
-                "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=768,574",
-                "https://realfood.tesco.com/media/images/472x310-SausageRaguGnocchi-4921325c-64d5-4973-9451-759d0c115e2e-0-472x310.jpg",
-                "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=768,574",
-                "https://realfood.tesco.com/media/images/472x310-SausageRaguGnocchi-4921325c-64d5-4973-9451-759d0c115e2e-0-472x310.jpg",
-                "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=768,574",
-                "https://realfood.tesco.com/media/images/472x310-SausageRaguGnocchi-4921325c-64d5-4973-9451-759d0c115e2e-0-472x310.jpg",
-                "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=768,574",
-                "https://realfood.tesco.com/media/images/472x310-SausageRaguGnocchi-4921325c-64d5-4973-9451-759d0c115e2e-0-472x310.jpg",
-                "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=768,574",
-                "https://realfood.tesco.com/media/images/472x310-SausageRaguGnocchi-4921325c-64d5-4973-9451-759d0c115e2e-0-472x310.jpg",
-                "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=768,574",
-                "https://realfood.tesco.com/media/images/472x310-SausageRaguGnocchi-4921325c-64d5-4973-9451-759d0c115e2e-0-472x310.jpg",
-                "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=768,574",
-                "https://realfood.tesco.com/media/images/472x310-SausageRaguGnocchi-4921325c-64d5-4973-9451-759d0c115e2e-0-472x310.jpg",
-                "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=768,574",
-                "https://realfood.tesco.com/media/images/472x310-SausageRaguGnocchi-4921325c-64d5-4973-9451-759d0c115e2e-0-472x310.jpg",
-                "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=768,574",
-                "https://realfood.tesco.com/media/images/472x310-SausageRaguGnocchi-4921325c-64d5-4973-9451-759d0c115e2e-0-472x310.jpg",
-                "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=768,574",
-                "https://realfood.tesco.com/media/images/472x310-SausageRaguGnocchi-4921325c-64d5-4973-9451-759d0c115e2e-0-472x310.jpg",
-                "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=768,574",
-                "https://realfood.tesco.com/media/images/472x310-SausageRaguGnocchi-4921325c-64d5-4973-9451-759d0c115e2e-0-472x310.jpg",
-                "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=768,574",
-                "https://realfood.tesco.com/media/images/472x310-SausageRaguGnocchi-4921325c-64d5-4973-9451-759d0c115e2e-0-472x310.jpg",
-                "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=768,574",
-                "https://realfood.tesco.com/media/images/472x310-SausageRaguGnocchi-4921325c-64d5-4973-9451-759d0c115e2e-0-472x310.jpg",
-                "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=768,574",
-                "https://realfood.tesco.com/media/images/472x310-SausageRaguGnocchi-4921325c-64d5-4973-9451-759d0c115e2e-0-472x310.jpg",
-                "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=768,574",
-                "https://realfood.tesco.com/media/images/472x310-SausageRaguGnocchi-4921325c-64d5-4973-9451-759d0c115e2e-0-472x310.jpg",
-            ), columns
+            uiState.postUrls, uiState.username, uiState.name, uiState.profilePicUrl,columns
         )
     }
 
 }
 
 @Composable
-fun PhotoGrid(photoUrls: List<String>, columns: Int) {
+fun PhotoGrid(photoUrls: List<String>, username: String?, fullName: String?, pfpUrl: String?,columns: Int) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(columns),
         verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -100,25 +63,25 @@ fun PhotoGrid(photoUrls: List<String>, columns: Int) {
                 .size(100.dp)
                 .clip(CircleShape)
                 .border(2.dp, MaterialTheme.colorScheme.onBackground, CircleShape)
-            Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(Modifier.fillMaxWidth().padding(8.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                 Spacer(modifier = Modifier.fillMaxHeight(0.05f))
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data("https://w0.peakpx.com/wallpaper/979/89/HD-wallpaper-purple-smile-design-eye-smily-profile-pic-face.jpg")
+                        .data(pfpUrl)
                         .crossfade(true).error(R.drawable.default_profile_pic)
                         .build(),
-                    contentDescription = "Profile Picture",
+                    contentDescription = "$fullName Profile Picture",
                     modifier = pfpModifier,
                     contentScale = ContentScale.Crop,
                 )
                 Text(
-                    text = "Tom Rowbotham",
+                    text = fullName?:"",
                     style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.onBackground,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = "@tom.rowbo",
+                    text = "@$username",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
@@ -138,54 +101,4 @@ fun PhotoGrid(photoUrls: List<String>, columns: Int) {
         }
     }
 }
-
-
-//@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
-//@Preview(showBackground = true)
-//@Composable
-//fun PlaygroundAppPreview() {
-//    TomsPlaygroundTheme {
-//        ProfileScreen()
-//    }
-//}
-//
-//@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
-//@Preview(
-//    showBackground = true,
-//    widthDp = 700,
-//    heightDp = 500,
-//    uiMode = Configuration.UI_MODE_NIGHT_YES
-//)
-//@Composable
-//fun PlaygroundAppPreviewTablet() {
-//    TomsPlaygroundTheme {
-//        ProfileScreen()
-//    }
-//}
-//
-//@Preview(showBackground = true, widthDp = 500, heightDp = 700)
-//@Composable
-//fun PlaygroundAppPreviewTabletPortrait() {
-//    TomsPlaygroundTheme {
-//        ProfileScreen()
-//    }
-//}
-//
-//@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
-//@Preview(showBackground = true, widthDp = 1100, heightDp = 600)
-//@Composable
-//fun PlaygroundAppPreviewDesktop() {
-//    TomsPlaygroundTheme {
-//        ProfileScreen()
-//    }
-//}
-//
-//@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
-//@Preview(showBackground = true, widthDp = 600, heightDp = 1100)
-//@Composable
-//fun PlaygroundAppPreviewDesktopPortrait() {
-//    TomsPlaygroundTheme {
-//        ProfileScreen()
-//    }
-//}
 

@@ -120,7 +120,8 @@ fun TomsPlaygroundNavigationWrapper(
         PlaygroundPermanentNavigationDrawerView(
             widthSize,
             topLevelNavActions::navigateTo,
-            selectedDestination
+            selectedDestination,
+            navController
         )
     } else {
         Row(modifier = Modifier.fillMaxSize()) {

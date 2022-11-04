@@ -12,6 +12,7 @@ import com.tomsplayground.TomsPlaygroundTopLevelDestinations
 import com.tomsplayground.ui.home.HomeScreen
 import com.tomsplayground.ui.home.HomeViewModel
 import com.tomsplayground.ui.profile.ProfileScreen
+import com.tomsplayground.ui.profile.ProfileViewModel
 
 @Composable
 fun TomsPlaygroundNavGraph(
@@ -30,7 +31,8 @@ fun TomsPlaygroundNavGraph(
             HomeScreen(viewModel)
         }
         composable(TomsPlaygroundTopLevelDestinations.PROFILE_SCREEN) {
-            ProfileScreen(widthSize)
+            val viewModel = hiltViewModel<ProfileViewModel>()
+            ProfileScreen(widthSize, viewModel)
         }
     }
 }
