@@ -14,6 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.tomsplayground.TOP_LEVEL_NAV_DESTINATION_ITEMS
+import com.tomsplayground.ui.utils.PlaygroundContentType
 
 @Composable
 fun PlaygroundNavigationRail(
@@ -77,7 +78,8 @@ fun PlaygroundPermanentNavigationDrawerView(
     widthSize: WindowWidthSizeClass,
     navigateToTopLevelDestination: (NavComponentItem) -> Unit,
     selectedDestination: String,
-    navController: NavHostController
+    navController: NavHostController,
+    contentType: PlaygroundContentType,
 ) {
     PermanentNavigationDrawer(drawerContent = {
         PlaygroundNavigationDrawerContent(
@@ -85,7 +87,11 @@ fun PlaygroundPermanentNavigationDrawerView(
             selectedDestination
         )
     }) {
-        TomsPlaygroundNavGraph(widthSize = widthSize, navController = navController)
+        TomsPlaygroundNavGraph(
+            navController = navController,
+            widthSize = widthSize,
+            contentType = contentType
+        )
     }
 }
 

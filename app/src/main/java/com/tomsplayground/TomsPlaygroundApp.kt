@@ -116,7 +116,8 @@ fun TomsPlaygroundNavigationWrapper(
             widthSize,
             topLevelNavActions::navigateTo,
             selectedDestination,
-            navController
+            navController,
+            contentType
         )
     } else {
         Row(modifier = Modifier.fillMaxSize()) {
@@ -130,7 +131,9 @@ fun TomsPlaygroundNavigationWrapper(
                     .fillMaxSize()
                     .background(MaterialTheme.colorScheme.background)
             ) {
-                TomsPlaygroundNavGraph(Modifier.weight(1f), navController, widthSize = widthSize)
+                TomsPlaygroundNavGraph(Modifier.weight(1f), navController, widthSize = widthSize,
+                    contentType = contentType
+                )
                 AnimatedVisibility(visible = navigationType == PlaygroundNavigationType.BOTTOM_NAVIGATION) {
                     PlaygroundNavigationBar(
                         topLevelNavActions::navigateTo, selectedDestination

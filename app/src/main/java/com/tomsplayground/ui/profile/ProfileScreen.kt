@@ -58,33 +58,7 @@ fun PhotoGrid(photoUrls: List<String>, username: String?, fullName: String?, pfp
         modifier = Modifier.padding(4.dp)
     ) {
         item(span = { GridItemSpan(maxLineSpan) }) {
-            val pfpModifier = Modifier
-                .size(100.dp)
-                .clip(CircleShape)
-                .border(2.dp, MaterialTheme.colorScheme.onBackground, CircleShape)
-            Column(Modifier.fillMaxWidth().padding(8.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                Spacer(modifier = Modifier.fillMaxHeight(0.05f))
-                AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(pfpUrl)
-                        .crossfade(true).error(R.drawable.default_profile_pic)
-                        .build(),
-                    contentDescription = "$fullName Profile Picture",
-                    modifier = pfpModifier,
-                    contentScale = ContentScale.Crop,
-                )
-                Text(
-                    text = fullName ?: "",
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onBackground,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    text = "@$username",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-            }
+            Header(pfpUrl, fullName, username)
             Spacer(modifier = Modifier.height(24.dp))
         }
         items(photoUrls) { photoUrl ->
@@ -98,5 +72,41 @@ fun PhotoGrid(photoUrls: List<String>, username: String?, fullName: String?, pfp
                 contentScale = ContentScale.Crop,
             )
         }
+    }
+}
+
+@Composable
+private fun Header(pfpUrl: String?, fullName: String?, username: String?) {
+    val pfpModifier = Modifier
+        .size(100.dp)
+        .clip(CircleShape)
+        .border(2.dp, MaterialTheme.colorScheme.onBackground, CircleShape)
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Spacer(modifier = Modifier.fillMaxHeight(0.05f))
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(pfpUrl)
+                .crossfade(true).error(R.drawable.default_profile_pic)
+                .build(),
+            contentDescription = "$fullName Profile Picture",
+            modifier = pfpModifier,
+            contentScale = ContentScale.Crop,
+        )
+        Text(
+            text = fullName ?: "",
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.onBackground,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = "@$username",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurface,
+        )
     }
 }

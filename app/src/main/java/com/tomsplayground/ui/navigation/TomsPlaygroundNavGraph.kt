@@ -13,13 +13,15 @@ import com.tomsplayground.ui.home.HomeScreen
 import com.tomsplayground.ui.home.HomeViewModel
 import com.tomsplayground.ui.profile.ProfileScreen
 import com.tomsplayground.ui.profile.ProfileViewModel
+import com.tomsplayground.ui.utils.PlaygroundContentType
 
 @Composable
 fun TomsPlaygroundNavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
     startDestination: String = TomsPlaygroundTopLevelDestinations.HOME_SCREEN,
-    widthSize: WindowWidthSizeClass
+    widthSize: WindowWidthSizeClass,
+    contentType: PlaygroundContentType
 ) {
     NavHost(
         navController = navController,
@@ -28,7 +30,7 @@ fun TomsPlaygroundNavGraph(
     ) {
         composable(TomsPlaygroundTopLevelDestinations.HOME_SCREEN) {
             val viewModel = hiltViewModel<HomeViewModel>()
-            HomeScreen(viewModel)
+            HomeScreen(viewModel, contentType)
         }
         composable(TomsPlaygroundTopLevelDestinations.PROFILE_SCREEN) {
             val viewModel = hiltViewModel<ProfileViewModel>()
