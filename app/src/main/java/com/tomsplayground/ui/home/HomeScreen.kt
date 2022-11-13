@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
@@ -30,14 +31,10 @@ fun HomeScreen(viewModel: HomeViewModel, contentType: PlaygroundContentType) {
 
 @Composable
 fun HomeContent(uiState: HomeUiState, contentType: PlaygroundContentType) {
-    Column() {
-        UserPostFeed(
-            "https://w0.peakpx.com/wallpaper/979/89/HD-wallpaper-purple-smile-design-eye-smily-profile-pic-face.jpg",
-            "Tom Rowbotham",
-            "10/10 Great Meal",
-            contentType
-
-        )
+    LazyColumn(Modifier) {
+        items(uiState.posts) { post ->
+            Post(post.postAuthor, post.imageUrl, post.caption, post.postAuthorPfp, contentType)
+        }
     }
 }
 
@@ -47,6 +44,7 @@ fun DefaultPreview() {
     TomsPlaygroundTheme {
         Column() {
             UserPostFeed(
+                "https://w0.peakpx.com/wallpaper/979/89/HD-wallpaper-purple-smile-design-eye-smily-profile-pic-face.jpg",
                 "https://w0.peakpx.com/wallpaper/979/89/HD-wallpaper-purple-smile-design-eye-smily-profile-pic-face.jpg",
                 "Tom Rowbotham",
                 "10/10 Great Meal",
@@ -63,6 +61,7 @@ fun DefaultPreviewPhone() {
         Column() {
             UserPostFeed(
                 "https://w0.peakpx.com/wallpaper/979/89/HD-wallpaper-purple-smile-design-eye-smily-profile-pic-face.jpg",
+                "https://w0.peakpx.com/wallpaper/979/89/HD-wallpaper-purple-smile-design-eye-smily-profile-pic-face.jpg",
                 "Tom Rowbotham",
                 "10/10 Great Meal",
                 PlaygroundContentType.SINGLE_PANE
@@ -74,30 +73,28 @@ fun DefaultPreviewPhone() {
 @Composable
 fun UserPostFeed(
     pfpUrl: String,
+    imageUrl: String,
     fullName: String,
     caption: String,
     contentType: PlaygroundContentType
 ) {
-    val pfpModifier = Modifier
-        .padding(8.dp)
-        .size(24.dp)
-        .clip(CircleShape)
-        .border(1.dp, MaterialTheme.colorScheme.onBackground, CircleShape)
     LazyColumn(Modifier) {
+
         item {
-            Post(fullName, pfpModifier, caption, contentType)
+            Post(fullName, imageUrl, caption, pfpUrl, contentType)
         }
     }
 }
 
 @Composable
 private fun Post(
-    fullName: String,
-    pfpModifier: Modifier,
-    caption: String,
+    fullName: String?,
+    imageUrl: String?,
+    caption: String?,
+    pfpUrl: String?,
     contentType: PlaygroundContentType
 ) {
-    PostHeader(fullName, pfpModifier)
+    PostHeader(fullName)
     if (contentType == PlaygroundContentType.SINGLE_PANE) {
         Image(
             painter = painterResource(R.drawable.default_profile_pic),
@@ -125,16 +122,16 @@ private fun Post(
 }
 
 @Composable
-private fun PostCaption(fullName: String, caption: String) {
+private fun PostCaption(fullName: String?, caption: String?) {
     Column {
         Text(
-            text = fullName,
+            text = fullName?: "Unknown User",
             style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.padding(top = 8.dp, start = 8.dp)
         )
         Text(
-            text = caption,
+            text = caption ?: "",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
@@ -143,7 +140,12 @@ private fun PostCaption(fullName: String, caption: String) {
 }
 
 @Composable
-private fun PostHeader(fullName: String, pfpModifier: Modifier) {
+private fun PostHeader(fullName: String?) {
+    val pfpModifier = Modifier
+        .padding(8.dp)
+        .size(24.dp)
+        .clip(CircleShape)
+        .border(1.dp, MaterialTheme.colorScheme.onBackground, CircleShape)
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
@@ -155,7 +157,7 @@ private fun PostHeader(fullName: String, pfpModifier: Modifier) {
             contentScale = ContentScale.Crop,
         )
         Text(
-            text = fullName,
+            text = fullName?: "Unknown User",
             style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.onSurface
         )
