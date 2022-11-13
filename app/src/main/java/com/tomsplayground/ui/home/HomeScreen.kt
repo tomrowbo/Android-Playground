@@ -1,6 +1,7 @@
 package com.tomsplayground.ui.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,6 +17,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -35,7 +37,7 @@ fun HomeScreen(viewModel: HomeViewModel, contentType: PlaygroundContentType) {
 
 @Composable
 fun HomeContent(uiState: HomeUiState, contentType: PlaygroundContentType) {
-    LazyColumn(Modifier) {
+    LazyColumn(Modifier.background(color = MaterialTheme.colorScheme.surfaceVariant)) {
         items(uiState.posts) { post ->
             Post(post.postAuthor, post.imageUrl, post.caption, post.postAuthorPfp, contentType)
         }
@@ -100,6 +102,7 @@ private fun Post(
 ) {
     PostHeader(pfpUrl, fullName)
     if (contentType == PlaygroundContentType.SINGLE_PANE) {
+        PostCaption(caption)
         //TODO: Once loaded should store pfps locally not URL
         AsyncImage(
             model  = ImageRequest.Builder(LocalContext.current)
@@ -112,7 +115,6 @@ private fun Post(
                 .aspectRatio(1f / 1f),
             contentScale = ContentScale.Crop
         )
-        PostCaption(fullName, caption)
     } else {
         Row{
             AsyncImage(
@@ -123,21 +125,15 @@ private fun Post(
                 contentDescription = "Picture",
                 modifier = Modifier.width(300.dp).height(300.dp),
                 contentScale = ContentScale.Crop)
-            PostCaption(fullName, caption)
+            PostCaption(caption)
         }
     }
-    Divider()
+    Divider(thickness = 8.dp, color = MaterialTheme.colorScheme.background)
 }
 
 @Composable
-private fun PostCaption(fullName: String?, caption: String?) {
+private fun PostCaption(caption: String?) {
     Column {
-        Text(
-            text = fullName?: "Unknown User",
-            style = MaterialTheme.typography.labelLarge,
-            color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.padding(top = 8.dp, start = 8.dp)
-        )
         Text(
             text = caption ?: "",
             style = MaterialTheme.typography.bodyMedium,
