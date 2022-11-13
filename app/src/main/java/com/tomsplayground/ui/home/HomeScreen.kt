@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -16,9 +17,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.tomsplayground.R
 import com.tomsplayground.ui.theme.TomsPlaygroundTheme
 import com.tomsplayground.ui.utils.PlaygroundContentType
@@ -94,27 +98,31 @@ private fun Post(
     pfpUrl: String?,
     contentType: PlaygroundContentType
 ) {
-    PostHeader(fullName)
+    PostHeader(pfpUrl, fullName)
     if (contentType == PlaygroundContentType.SINGLE_PANE) {
-        Image(
-            painter = painterResource(R.drawable.default_profile_pic),
-            contentDescription = "",
+        //TODO: Once loaded should store pfps locally not URL
+        AsyncImage(
+            model  = ImageRequest.Builder(LocalContext.current)
+                .data(imageUrl)
+                .crossfade(true).error(R.drawable.default_profile_pic)
+                .build(),
+            contentDescription = "${fullName} profile picture",
             Modifier
                 .fillMaxWidth()
-                .aspectRatio(1f / 1f)
-
+                .aspectRatio(1f / 1f),
+            contentScale = ContentScale.Crop
         )
         PostCaption(fullName, caption)
     } else {
         Row{
-            Image(
-                painter = painterResource(R.drawable.default_profile_pic),
-                contentDescription = "",
-                Modifier
-                    .width(300.dp)
-                    .aspectRatio(1f / 1f)
-
-            )
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(imageUrl)
+                    .crossfade(true).error(R.drawable.default_profile_pic)
+                    .build(),
+                contentDescription = "Picture",
+                modifier = Modifier.width(300.dp).height(300.dp),
+                contentScale = ContentScale.Crop)
             PostCaption(fullName, caption)
         }
     }
@@ -140,7 +148,7 @@ private fun PostCaption(fullName: String?, caption: String?) {
 }
 
 @Composable
-private fun PostHeader(fullName: String?) {
+private fun PostHeader(pfpUrl: String?, fullName: String?) {
     val pfpModifier = Modifier
         .padding(8.dp)
         .size(24.dp)
@@ -150,8 +158,11 @@ private fun PostHeader(fullName: String?) {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Image(
-            painter = painterResource(R.drawable.default_profile_pic),
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(pfpUrl)
+                .crossfade(true).error(R.drawable.default_profile_pic)
+                .build(),
             contentDescription = "$fullName Profile Picture",
             modifier = pfpModifier,
             contentScale = ContentScale.Crop,
