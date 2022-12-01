@@ -4,8 +4,8 @@ import com.tomsplayground.domain.model.Post
 import com.tomsplayground.ui.home.PostUiModel
 import javax.inject.Inject
 
-class PostUiStateMapper @Inject constructor(){
-    fun toPostUiModel(post: Post): PostUiModel{
+class PostUiStateMapper @Inject constructor() {
+    fun toPostUiModel(post: Post): PostUiModel {
         return PostUiModel(
             postAuthor = post.postAuthor,
             postAuthorPfp = post.authorPfp,

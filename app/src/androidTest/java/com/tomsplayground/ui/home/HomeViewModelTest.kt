@@ -1,19 +1,12 @@
 package com.tomsplayground.ui.home
 
-import com.google.common.truth.Truth
 import com.tomsplayground.domain.PostRepository
 import com.tomsplayground.domain.mapper.PostUiStateMapper
 import com.tomsplayground.domain.model.Post
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
-import org.junit.Test
-
 
 class HomeViewModelTest {
 
@@ -29,7 +22,7 @@ class HomeViewModelTest {
         MockKAnnotations.init(this)
     }
 
-    //TODO: Get Init test to pass
+    // TODO: Get Init test to pass
 //    @Test
 //    fun GIVEN_postsFromRepository_WHEN_getContent_THEN_shouldMapAsPostsUiState() = runTest{
 //            //GIVEN
@@ -45,8 +38,6 @@ class HomeViewModelTest {
 //            Truth.assertThat(homeViewModel.uiState.value.posts).isEqualTo(expectedPosts)
 //
 //        }
-
-
 
     @After
     fun tearDown() {
