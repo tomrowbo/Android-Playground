@@ -5,11 +5,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithText
-import com.tomsplayground.domain.model.Post
 import com.tomsplayground.ui.theme.TomsPlaygroundTheme
 import com.tomsplayground.ui.utils.PlaygroundContentType
-import kotlinx.coroutines.flow.MutableStateFlow
 import org.junit.Rule
 import org.junit.Test
 import java.lang.Thread.sleep
@@ -22,9 +19,10 @@ class HomeTest {
     fun homeTest() {
         // Start the app
         composeTestRule.setContent {
-            val mockUiState = remember {mutableStateOf(HomeUiState(getMockedPostsUiState()))}
+            val mockUiState = remember { mutableStateOf(HomeUiState(getMockedPostsUiState())) }
             TomsPlaygroundTheme() {
-                HomeScreen(mockUiState,
+                HomeScreen(
+                    mockUiState,
                     PlaygroundContentType.SINGLE_PANE
                 )
             }
@@ -62,5 +60,4 @@ class HomeTest {
         const val CAPTION2 = "caption2"
         const val SECOND_POST_AUTHOR = "second_post_author"
     }
-
 }

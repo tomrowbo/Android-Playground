@@ -30,7 +30,6 @@ fun HomeScreen(uiState: State<HomeUiState>, contentType: PlaygroundContentType) 
     HomeContent(uiState.value, contentType)
 }
 
-
 @Composable
 fun HomeContent(uiState: HomeUiState, contentType: PlaygroundContentType) {
     LazyColumn(Modifier.background(color = MaterialTheme.colorScheme.surfaceVariant)) {

@@ -5,7 +5,6 @@ import com.tomsplayground.domain.PostRepository
 import com.tomsplayground.domain.mapper.PostUiStateMapper
 import com.tomsplayground.domain.model.Post
 import io.mockk.*
-import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
@@ -25,7 +24,7 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun GIVEN_postsFromRepository_WHEN_getContent_THEN_shouldMapAsPostsUiState() = runTest{
+    fun GIVEN_postsFromRepository_WHEN_getContent_THEN_shouldMapAsPostsUiState() = runTest {
         val posts = getMockPosts()
         val userFeed = getMappedPostsUiState()
         every { postRepository.getUserFeedPosts() } returns posts
