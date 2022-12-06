@@ -4,6 +4,9 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
@@ -11,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.window.layout.FoldingFeature
@@ -21,6 +25,7 @@ import com.tomsplayground.ui.utils.DevicePosture
 import com.tomsplayground.ui.utils.isBookPosture
 import com.tomsplayground.ui.utils.isSeparating
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -33,9 +38,17 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val devicePostureFlow = getDevicePostureFlow()
         setContent {
+            val viewModel = hiltViewModel<MainViewModel>()
+//            viewModel.setDarkModeIcon(packageManager, false)
             val windowSize = calculateWindowSizeClass(this)
             val displayFeatures = calculateDisplayFeatures(this)
-            TomsPlaygroundApp(windowSize, displayFeatures)
+            Column {
+                Button(onClick = { viewModel.setDarkModeIcon(packageManager, true) }) {
+                    Text(text = "click me")
+                }
+                TomsPlaygroundApp(windowSize, displayFeatures)
+            }
+//            viewModel.setDarkModeIcon(packageManager, true)
         }
     }
 
