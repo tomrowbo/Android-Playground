@@ -1,12 +1,15 @@
 package com.tomsplayground.ui.home
 
+import com.google.common.truth.Truth
 import com.tomsplayground.domain.PostRepository
 import com.tomsplayground.domain.mapper.PostUiStateMapper
 import com.tomsplayground.domain.model.Post
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
+import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
+import org.junit.Test
 
 class HomeViewModelTest {
 
@@ -14,30 +17,23 @@ class HomeViewModelTest {
 
     private val postUiStateMapper = PostUiStateMapper()
 
-    @MockK
-    private val postRepository: PostRepository = mockk()
+    private val postRepository = mockk<PostRepository>()
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
     }
 
-    // TODO: Get Init test to pass
-//    @Test
-//    fun GIVEN_postsFromRepository_WHEN_getContent_THEN_shouldMapAsPostsUiState() = runTest{
-//            //GIVEN
-//            val posts = getMockPosts()
-//            val expectedPosts = getMappedPostsUiState()
-//
-//            every { postRepository.getUserFeedPosts() } returns posts
-//
-//            //WHEN
-//            generateViewModel()
-//
-//            //THEN
-//            Truth.assertThat(homeViewModel.uiState.value.posts).isEqualTo(expectedPosts)
-//
-//        }
+    @Test
+    fun GIVEN_postsFromRepository_WHEN_getContent_THEN_shouldMapAsPostsUiState() = runTest{
+        val posts = getMockPosts()
+        val userFeed = getMappedPostsUiState()
+        every { postRepository.getUserFeedPosts() } returns posts
+
+        generateViewModel()
+
+        Truth.assertThat(userFeed).isEqualTo(homeViewModel.uiState.value.posts)
+    }
 
     @After
     fun tearDown() {
@@ -50,20 +46,10 @@ class HomeViewModelTest {
 
     private fun getMockPosts(): List<Post> {
         val post1 = Post(
-            POST_AUTHOR,
-            AUTHOR_PFP,
-            "1",
-            IMAGE_URL,
-            CONTENT_DESC,
-            CAPTION
+            POST_AUTHOR, AUTHOR_PFP, "1", IMAGE_URL, CONTENT_DESC, CAPTION
         )
         val post2 = Post(
-            POST_AUTHOR,
-            SECOND_POST_AUTHOR,
-            "2",
-            IMAGE_URL,
-            CONTENT_DESC,
-            CAPTION
+            SECOND_POST_AUTHOR, AUTHOR_PFP, "2", IMAGE_URL, CONTENT_DESC, CAPTION
         )
         return listOf(post1, post2)
     }
