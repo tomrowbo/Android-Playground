@@ -10,7 +10,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,9 +26,8 @@ import com.tomsplayground.ui.theme.TomsPlaygroundTheme
 import com.tomsplayground.ui.utils.PlaygroundContentType
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel, contentType: PlaygroundContentType) {
-    val uiState by viewModel.uiState.collectAsState()
-    HomeContent(uiState, contentType)
+fun HomeScreen(uiState: State<HomeUiState>, contentType: PlaygroundContentType) {
+    HomeContent(uiState.value, contentType)
 }
 
 

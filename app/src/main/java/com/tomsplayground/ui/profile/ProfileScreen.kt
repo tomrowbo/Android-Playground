@@ -13,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -27,15 +28,15 @@ import coil.request.ImageRequest
 import com.tomsplayground.R
 
 @Composable
-fun ProfileScreen(widthSize: WindowWidthSizeClass, viewModel: ProfileViewModel) {
+fun ProfileScreen(widthSize: WindowWidthSizeClass, uiState: State<ProfileUiState>) {
     val columns = when (widthSize) {
         WindowWidthSizeClass.Compact -> 3
         WindowWidthSizeClass.Medium -> 4
         WindowWidthSizeClass.Expanded -> 5
         else -> 1
     }
+    val uiStateValue = uiState.value
 
-    val uiState by viewModel.uiState.collectAsState()
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -44,7 +45,7 @@ fun ProfileScreen(widthSize: WindowWidthSizeClass, viewModel: ProfileViewModel) 
             .background(MaterialTheme.colorScheme.background)
     ) {
         PhotoGrid(
-            uiState.postUrls, uiState.username, uiState.name, uiState.profilePicUrl, columns
+            uiStateValue.postUrls, uiStateValue.username, uiStateValue.name, uiStateValue.profilePicUrl, columns
         )
     }
 }

@@ -2,6 +2,7 @@ package com.tomsplayground.ui.navigation
 
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -30,11 +31,13 @@ fun TomsPlaygroundNavGraph(
     ) {
         composable(TomsPlaygroundTopLevelDestinations.HOME_SCREEN) {
             val viewModel = hiltViewModel<HomeViewModel>()
-            HomeScreen(viewModel, contentType)
+            val uiState = viewModel.uiState.collectAsState()
+            HomeScreen(uiState, contentType)
         }
         composable(TomsPlaygroundTopLevelDestinations.PROFILE_SCREEN) {
             val viewModel = hiltViewModel<ProfileViewModel>()
-            ProfileScreen(widthSize, viewModel)
+            val uiState = viewModel.uiState.collectAsState()
+            ProfileScreen(widthSize, uiState)
         }
     }
 }
