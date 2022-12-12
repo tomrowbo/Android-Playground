@@ -4,4 +4,7 @@
     <string name="search_icon_content_desc">Search Icon</string>
     <string name="post_icon_content_desc">Post Icon</string>
     <string name="person_icon_content_desc">Person Icon</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="start_capture">Start Capture</string>
+    <string name="stop_capture">Stop Capture</string>
 </resources>

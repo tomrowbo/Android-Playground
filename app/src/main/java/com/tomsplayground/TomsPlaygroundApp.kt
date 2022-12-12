@@ -18,7 +18,7 @@ import androidx.window.layout.FoldingFeature
 import com.tomsplayground.ui.navigation.PlaygroundNavigationBar
 import com.tomsplayground.ui.navigation.PlaygroundNavigationRail
 import com.tomsplayground.ui.navigation.PlaygroundPermanentNavigationDrawerView
-import com.tomsplayground.ui.navigation.TomsPlaygroundNavGraph
+import com.tomsplayground.ui.navigation.MainNavGraph
 import com.tomsplayground.ui.theme.TomsPlaygroundTheme
 import com.tomsplayground.ui.utils.*
 
@@ -131,7 +131,7 @@ fun TomsPlaygroundNavigationWrapper(
                     .fillMaxSize()
                     .background(MaterialTheme.colorScheme.background)
             ) {
-                TomsPlaygroundNavGraph(
+                MainNavGraph(
                     Modifier.weight(1f), navController, widthSize = widthSize,
                     contentType = contentType
                 )

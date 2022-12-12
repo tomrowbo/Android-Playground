@@ -28,4 +28,5 @@ class HomeViewModel @Inject constructor(
             _uiState.value = _uiState.value.copy(posts = userFeed)
         }
     }
+
 }

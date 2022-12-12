@@ -87,7 +87,7 @@ fun PlaygroundPermanentNavigationDrawerView(
             selectedDestination
         )
     }) {
-        TomsPlaygroundNavGraph(
+        MainNavGraph(
             navController = navController,
             widthSize = widthSize,
             contentType = contentType

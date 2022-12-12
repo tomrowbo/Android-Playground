@@ -1,15 +1,20 @@
 package com.tomsplayground.ui.navigation
 
+import android.content.Intent
+import android.os.Bundle
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.activity
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.tomsplayground.TomsPlaygroundTopLevelDestinations
+import com.tomsplayground.ui.camera.CameraActivity
 import com.tomsplayground.ui.home.HomeScreen
 import com.tomsplayground.ui.home.HomeViewModel
 import com.tomsplayground.ui.profile.ProfileScreen
@@ -17,7 +22,7 @@ import com.tomsplayground.ui.profile.ProfileViewModel
 import com.tomsplayground.ui.utils.PlaygroundContentType
 
 @Composable
-fun TomsPlaygroundNavGraph(
+fun MainNavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
     startDestination: String = TomsPlaygroundTopLevelDestinations.HOME_SCREEN,
@@ -38,6 +43,9 @@ fun TomsPlaygroundNavGraph(
             val viewModel = hiltViewModel<ProfileViewModel>()
             val uiState = viewModel.uiState.collectAsState()
             ProfileScreen(widthSize, uiState)
+        }
+        activity(TomsPlaygroundTopLevelDestinations.POST_SCREEN){
+            activityClass = CameraActivity::class
         }
     }
 }
