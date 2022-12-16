@@ -100,6 +100,8 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:2.44"
     implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.7.20"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
 }
 
 // Allow references to generated code
