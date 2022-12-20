@@ -1,9 +1,12 @@
-package com.tomsplayground.domain
+package com.tomsplayground.data.repository
 
+import com.tomsplayground.data.dao.PostDao
+import com.tomsplayground.data.model.PostEntity
 import com.tomsplayground.domain.model.Post
 import javax.inject.Inject
 
-class PostRepository @Inject constructor() {
+class PostRepository @Inject constructor(){
+
     fun getPostById() {
     }
 

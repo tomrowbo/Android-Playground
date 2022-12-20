@@ -2,6 +2,7 @@ package com.tomsplayground.data.database
 
 import android.content.Context
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.tomsplayground.data.dao.PostDao
 import dagger.Module
 import dagger.Provides
@@ -12,17 +13,22 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class RoomModule {
+class FirebaseModule {
     @Singleton
     @Provides
-    fun providesRoomDatabase(
-        @ApplicationContext context: Context
-    ): TomsPlaygroundDb {
-        return TomsPlaygroundDb.getDatabase(context)
+    fun provideFirebaseFirestoreInstance(
+    ): FirebaseFirestore {
+        return FirebaseFirestore.getInstance()
     }
 
     @Singleton
     @Provides
-    fun providesPostDao(db: TomsPlaygroundDb): PostDao = db.postDao()
+    fun provideFirebaseStorageInstance(
+    ): FirebaseStorage {
+        return FirebaseStorage.getInstance()
+    }
+
+
+
 
 }

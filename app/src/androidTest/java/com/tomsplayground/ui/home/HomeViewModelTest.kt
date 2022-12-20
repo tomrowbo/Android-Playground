@@ -1,7 +1,7 @@
 package com.tomsplayground.ui.home
 
 import com.google.common.truth.Truth
-import com.tomsplayground.domain.PostRepository
+import com.tomsplayground.data.repository.PostRepository
 import com.tomsplayground.domain.mapper.PostUiStateMapper
 import com.tomsplayground.domain.model.Post
 import io.mockk.*

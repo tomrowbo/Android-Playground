@@ -2,7 +2,7 @@ package com.tomsplayground.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tomsplayground.domain.PostRepository
+import com.tomsplayground.data.repository.PostRepository
 import com.tomsplayground.domain.mapper.PostUiStateMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*

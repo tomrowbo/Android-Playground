@@ -1,4 +1,4 @@
-package com.tomsplayground.domain
+package com.tomsplayground.data.repository
 
 import com.tomsplayground.domain.model.User
 import javax.inject.Inject
